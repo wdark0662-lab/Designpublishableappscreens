@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Home, Book, ShieldCheck, Calculator, HelpCircle, Sun, Moon, MoreVertical, User, Settings, LogOut } from 'lucide-react';
+import { Home, Book, ShieldCheck, Calculator, HelpCircle, User, Settings, LogOut, Sun, Moon } from 'lucide-react';
 import HomeScreen from './HomeScreen';
 import GuideScreen from './GuideScreen';
 import EligibilityScreen from './EligibilityScreen';
 import CalculatorScreen from './CalculatorScreen';
 import FAQScreen from './FAQScreen';
+import ProfileScreen from './ProfileScreen';
+import SettingsScreen from './SettingsScreen';
+import PWAPrompt from './PWAPrompt';
+import NetworkStatus from './NetworkStatus';
 
-type Screen = 'home' | 'guide' | 'eligibility' | 'calculator' | 'faq';
+type Screen = 'home' | 'guide' | 'eligibility' | 'calculator' | 'faq' | 'profile' | 'settings';
 
 interface MainAppProps {
   colors: any;
@@ -17,13 +21,12 @@ interface MainAppProps {
 
 export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }: MainAppProps) {
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
-  const [showMenu, setShowMenu] = useState(false);
 
   const navigation = [
-    { id: 'home' as Screen, label: 'Home', icon: Home },
-    { id: 'guide' as Screen, label: 'Guide', icon: Book },
-    { id: 'eligibility' as Screen, label: 'Check', icon: ShieldCheck },
-    { id: 'calculator' as Screen, label: 'Calculate', icon: Calculator },
+    { id: 'home' as Screen, label: 'Início', icon: Home },
+    { id: 'guide' as Screen, label: 'Guia', icon: Book },
+    { id: 'eligibility' as Screen, label: 'Verificar', icon: ShieldCheck },
+    { id: 'calculator' as Screen, label: 'Calcular', icon: Calculator },
     { id: 'faq' as Screen, label: 'FAQ', icon: HelpCircle },
   ];
 
@@ -40,6 +43,10 @@ export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }
         return <CalculatorScreen {...screenProps} />;
       case 'faq':
         return <FAQScreen {...screenProps} />;
+      case 'profile':
+        return <ProfileScreen {...screenProps} />;
+      case 'settings':
+        return <SettingsScreen {...screenProps} darkMode={darkMode} onToggleDarkMode={onToggleDarkMode} />;
       default:
         return <HomeScreen {...screenProps} onNavigate={(screen) => setCurrentScreen(screen as Screen)} />;
     }
@@ -49,8 +56,10 @@ export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      height: '100vh',
+      height: '100%',
       backgroundColor: colors.background,
+      touchAction: 'pan-y',
+      position: 'relative' as const,
     },
     topBar: {
       display: 'flex',
@@ -58,9 +67,15 @@ export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }
       alignItems: 'center',
       height: '56px',
       padding: '0 16px',
+      paddingTop: 'env(safe-area-inset-top)',
       backgroundColor: colors.surface,
       borderBottom: `1px solid ${colors.border}`,
-      position: 'relative' as const,
+      position: 'sticky' as const,
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
     },
     topBarTitle: {
       fontSize: '18px',
@@ -82,149 +97,75 @@ export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }
       cursor: 'pointer',
       color: colors.textSecondary,
       borderRadius: '8px',
-    },
-    menu: {
-      position: 'absolute' as const,
-      top: '56px',
-      right: '16px',
-      backgroundColor: colors.surface,
-      border: `1px solid ${colors.border}`,
-      borderRadius: '12px',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-      minWidth: '180px',
-      zIndex: 1000,
-    },
-    menuItem: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      padding: '12px 16px',
-      cursor: 'pointer',
-      background: 'none',
-      border: 'none',
-      width: '100%',
-      textAlign: 'left' as const,
-      transition: 'background-color 0.2s',
-    },
-    menuText: {
-      fontSize: '15px',
-      color: colors.text,
-    },
-    menuTextDanger: {
-      fontSize: '15px',
-      color: '#ef4444',
-    },
-    menuDivider: {
-      height: '1px',
-      backgroundColor: colors.border,
-      margin: '4px 0',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
+      transition: 'background-color 0.15s ease',
     },
     content: {
       flex: 1,
       overflowY: 'auto' as const,
+      overflowX: 'hidden' as const,
+      WebkitOverflowScrolling: 'touch' as const,
+      position: 'relative' as const,
     },
     bottomNav: {
       display: 'flex',
       height: '64px',
       backgroundColor: colors.surface,
       borderTop: `1px solid ${colors.border}`,
+      position: 'sticky' as const,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 10,
+      paddingBottom: 'env(safe-area-inset-bottom)',
+      boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.05)',
     },
     navButton: {
       flex: 1,
       display: 'flex',
       flexDirection: 'column' as const,
-      justifyContent: 'center',
       alignItems: 'center',
-      padding: '8px',
+      justifyContent: 'center',
       background: 'none',
       border: 'none',
       cursor: 'pointer',
+      padding: '8px',
+      gap: '4px',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
+      transition: 'all 0.2s ease',
+      minHeight: '44px',
     },
     navLabel: {
       fontSize: '12px',
-      marginTop: '4px',
     },
   };
 
   return (
     <div style={styles.container}>
+      {/* Network Status Indicator */}
+      <NetworkStatus colors={colors} />
+
       {/* Top App Bar */}
       <div style={styles.topBar}>
-        <div style={styles.topBarTitle}>Benefits Guide</div>
+        <div style={styles.topBarTitle}>Guia de Benefícios</div>
         <div style={styles.topBarActions}>
           <button
             onClick={onToggleDarkMode}
             style={styles.iconButton}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={darkMode ? 'Ativar modo claro' : 'Ativar modo escuro'}
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button
-            onClick={() => setShowMenu(!showMenu)}
+            onClick={() => setCurrentScreen('profile')}
             style={styles.iconButton}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            aria-label="Menu"
+            aria-label="Perfil"
           >
-            <MoreVertical size={20} />
+            <User size={20} />
           </button>
         </div>
-
-        {/* Dropdown Menu */}
-        {showMenu && (
-          <>
-            <div
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 999,
-              }}
-              onClick={() => setShowMenu(false)}
-            />
-            <div style={styles.menu}>
-              <button
-                style={styles.menuItem}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                onClick={() => {
-                  setShowMenu(false);
-                }}
-              >
-                <User size={20} color={colors.text} />
-                <span style={styles.menuText}>Profile</span>
-              </button>
-              <button
-                style={styles.menuItem}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                onClick={() => {
-                  setShowMenu(false);
-                }}
-              >
-                <Settings size={20} color={colors.text} />
-                <span style={styles.menuText}>Settings</span>
-              </button>
-              <div style={styles.menuDivider} />
-              <button
-                style={styles.menuItem}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                onClick={() => {
-                  setShowMenu(false);
-                  onLogout();
-                }}
-              >
-                <LogOut size={20} color="#ef4444" />
-                <span style={styles.menuTextDanger}>Logout</span>
-              </button>
-            </div>
-          </>
-        )}
       </div>
 
       {/* Main Content */}
@@ -241,25 +182,22 @@ export default function MainApp({ colors, darkMode, onToggleDarkMode, onLogout }
             <button
               key={item.id}
               onClick={() => setCurrentScreen(item.id)}
-              style={styles.navButton}
+              style={{
+                ...styles.navButton,
+                color: isActive ? colors.primary : colors.textSecondary,
+              }}
               aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
             >
-              <Icon
-                size={24}
-                color={isActive ? colors.primary : colors.textSecondary}
-              />
-              <span
-                style={{
-                  ...styles.navLabel,
-                  color: isActive ? colors.primary : colors.textSecondary,
-                }}
-              >
-                {item.label}
-              </span>
+              <Icon size={24} />
+              <span style={styles.navLabel}>{item.label}</span>
             </button>
           );
         })}
       </div>
+
+      {/* PWA Install Prompt (iOS) */}
+      <PWAPrompt colors={colors} />
     </div>
   );
 }

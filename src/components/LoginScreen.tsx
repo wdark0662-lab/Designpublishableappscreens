@@ -4,11 +4,12 @@ import { Mail, Lock, Eye, EyeOff, ArrowLeft, Chrome, Apple } from 'lucide-react'
 interface LoginScreenProps {
   colors: any;
   onLogin: (email: string, password: string) => void;
+  onSocialLogin: (provider: 'google' | 'apple') => void;
   onBack: () => void;
   onSignUp: () => void;
 }
 
-export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: LoginScreenProps) {
+export default function LoginScreen({ colors, onLogin, onSocialLogin, onBack, onSignUp }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -24,20 +25,20 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
     let isValid = true;
 
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError('Email é obrigatório');
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError('Por favor, insira um email válido');
       isValid = false;
     } else {
       setEmailError('');
     }
 
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError('Senha é obrigatória');
       isValid = false;
     } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
+      setPasswordError('A senha deve ter pelo menos 6 caracteres');
       isValid = false;
     } else {
       setPasswordError('');
@@ -48,14 +49,29 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
     }
   };
 
+  const handleGoogleLogin = () => {
+    // Simulate Google login
+    alert('Login com Google iniciado...');
+    onSocialLogin('google');
+  };
+
+  const handleAppleLogin = () => {
+    // Simulate Apple login
+    alert('Login com Apple iniciado...');
+    onSocialLogin('apple');
+  };
+
   const styles = {
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      minHeight: '100vh',
+      minHeight: '100%',
+      height: '100%',
       backgroundColor: colors.background,
       padding: '24px',
       overflowY: 'auto' as const,
+      WebkitOverflowScrolling: 'touch' as const,
+      touchAction: 'pan-y' as const,
     },
     header: {
       marginBottom: '24px',
@@ -132,6 +148,8 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
       border: 'none',
       cursor: 'pointer',
       color: colors.textSecondary,
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
       marginRight: '-12px',
     },
     errorText: {
@@ -159,6 +177,9 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
       boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
       marginTop: '8px',
       transition: 'transform 0.2s',
+      minHeight: '52px',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
     },
     divider: {
       display: 'flex',
@@ -187,6 +208,9 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
       backgroundColor: colors.surface,
       cursor: 'pointer',
       transition: 'background-color 0.2s',
+      minHeight: '52px',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
     },
     socialButtonText: {
       fontSize: '15px',
@@ -217,15 +241,15 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <button onClick={onBack} style={styles.backButton} aria-label="Go back">
+        <button onClick={onBack} style={styles.backButton} aria-label="Voltar">
           <ArrowLeft size={24} />
         </button>
       </div>
 
       <div style={styles.titleSection}>
-        <div style={styles.title}>Welcome Back</div>
+        <div style={styles.title}>Bem-vindo de Volta</div>
         <div style={styles.subtitle}>
-          Sign in to continue to Benefits Guide
+          Entre para continuar no Guia de Benefícios
         </div>
       </div>
 
@@ -244,7 +268,7 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
                 setEmail(e.target.value);
                 setEmailError('');
               }}
-              placeholder="your.email@example.com"
+              placeholder="seu.email@exemplo.com"
               type="email"
               autoCapitalize="none"
               autoCorrect="off"
@@ -254,7 +278,7 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
         </div>
 
         <div style={styles.inputGroup}>
-          <div style={styles.label}>Password</div>
+          <div style={styles.label}>Senha</div>
           <div style={{
             ...styles.inputContainer,
             ...(passwordError ? styles.inputContainerError : {}),
@@ -267,14 +291,14 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
                 setPassword(e.target.value);
                 setPasswordError('');
               }}
-              placeholder="Enter your password"
+              placeholder="Digite sua senha"
               type={showPassword ? 'text' : 'password'}
               autoCapitalize="none"
             />
             <button
               onClick={() => setShowPassword(!showPassword)}
               style={styles.eyeButton}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
               type="button"
             >
               {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -283,52 +307,54 @@ export default function LoginScreen({ colors, onLogin, onBack, onSignUp }: Login
           {passwordError && <div style={styles.errorText}>{passwordError}</div>}
         </div>
 
-        <button style={styles.forgotButton} type="button">Forgot Password?</button>
+        <button style={styles.forgotButton} type="button">Esqueceu a Senha?</button>
 
         <button
           onClick={handleLogin}
           style={styles.loginButton}
           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          aria-label="Sign in"
+          aria-label="Entrar"
           type="button"
         >
-          Sign In
+          Entrar
         </button>
 
         <div style={styles.divider}>
           <div style={styles.dividerLine} />
-          <div style={styles.dividerText}>OR</div>
+          <div style={styles.dividerText}>OU</div>
           <div style={styles.dividerLine} />
         </div>
 
         <button
+          onClick={handleGoogleLogin}
           style={styles.socialButton}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
-          aria-label="Continue with Google"
+          aria-label="Continuar com Google"
           type="button"
         >
           <Chrome size={20} color="#ea4335" />
-          <div style={styles.socialButtonText}>Continue with Google</div>
+          <div style={styles.socialButtonText}>Continuar com Google</div>
         </button>
 
         <button
+          onClick={handleAppleLogin}
           style={styles.socialButton}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
-          aria-label="Continue with Apple"
+          aria-label="Continuar com Apple"
           type="button"
         >
           <Apple size={20} color={colors.text} />
-          <div style={styles.socialButtonText}>Continue with Apple</div>
+          <div style={styles.socialButtonText}>Continuar com Apple</div>
         </button>
       </div>
 
       <div style={styles.signupSection}>
-        <span style={styles.signupText}>Don't have an account?</span>
+        <span style={styles.signupText}>Não tem uma conta?</span>
         <button onClick={onSignUp} style={styles.signupLink} type="button">
-          Sign Up
+          Cadastre-se
         </button>
       </div>
     </div>

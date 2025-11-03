@@ -12,23 +12,23 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
   const questions = [
     {
       id: 0,
-      question: 'What is your household size?',
-      options: ['1 person', '2 people', '3 people', '4+ people'],
+      question: 'Qual é o tamanho da sua família?',
+      options: ['1 pessoa', '2 pessoas', '3 pessoas', '4+ pessoas'],
     },
     {
       id: 1,
-      question: 'What is your approximate monthly income?',
-      options: ['Under $1,500', '$1,500 - $3,000', '$3,000 - $5,000', 'Over $5,000'],
+      question: 'Qual é a sua renda mensal aproximada?',
+      options: ['Menos de R$ 1.500', 'R$ 1.500 - R$ 3.000', 'R$ 3.000 - R$ 5.000', 'Mais de R$ 5.000'],
     },
     {
       id: 2,
-      question: 'Do you have children under 18?',
-      options: ['Yes', 'No'],
+      question: 'Você tem filhos menores de 18 anos?',
+      options: ['Sim', 'Não'],
     },
     {
       id: 3,
-      question: 'What type of assistance are you seeking?',
-      options: ['Housing', 'Food/Nutrition', 'Healthcare', 'Multiple types'],
+      question: 'Que tipo de assistência você está buscando?',
+      options: ['Moradia', 'Alimento/Nutrição', 'Saúde', 'Vários tipos'],
     },
   ];
 
@@ -45,26 +45,26 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
   const calculateEligibility = () => {
     const results = [
       {
-        program: 'Family Assistance',
+        program: 'Assistência Familiar',
         eligible:
-          answers[2] === 'Yes' &&
-          (answers[1] === 'Under $1,500' || answers[1] === '$1,500 - $3,000'),
-        description: 'Support for families with children',
+          answers[2] === 'Sim' &&
+          (answers[1] === 'Menos de R$ 1.500' || answers[1] === 'R$ 1.500 - R$ 3.000'),
+        description: 'Apoio para famílias com crianças',
       },
       {
-        program: 'Housing Support',
-        eligible: answers[3] === 'Housing' || answers[3] === 'Multiple types',
-        description: 'Rental assistance and housing programs',
+        program: 'Apoio à Moradia',
+        eligible: answers[3] === 'Moradia' || answers[3] === 'Vários tipos',
+        description: 'Assistência de aluguel e programas de moradia',
       },
       {
-        program: 'Nutrition Programs',
-        eligible: answers[1] === 'Under $1,500' || answers[1] === '$1,500 - $3,000',
-        description: 'Food assistance and meal programs',
+        program: 'Programas Nutricionais',
+        eligible: answers[1] === 'Menos de R$ 1.500' || answers[1] === 'R$ 1.500 - R$ 3.000',
+        description: 'Assistência alimentar e programas de refeições',
       },
       {
-        program: 'Healthcare Access',
-        eligible: answers[1] !== 'Over $5,000',
-        description: 'Medical coverage and prescription help',
+        program: 'Acesso à Saúde',
+        eligible: answers[1] !== 'Mais de R$ 5.000',
+        description: 'Cobertura médica e ajuda com medicamentos',
       },
     ];
     return results;
@@ -110,9 +110,9 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
               ✅
             </div>
             <div>
-              <h1 style={{ fontSize: '24px', color: '#fff', margin: 0, fontWeight: 600 }}>Your Results</h1>
+              <h1 style={{ fontSize: '24px', color: '#fff', margin: 0, fontWeight: 600 }}>Seus Resultados</h1>
               <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.8)', margin: 0 }}>
-                {eligibleCount} program{eligibleCount !== 1 ? 's' : ''} available
+                {eligibleCount} programa{eligibleCount !== 1 ? 's' : ''} disponível{eligibleCount !== 1 ? 'is' : ''}
               </p>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
             backgroundColor: colors.surfaceLight,
           }}>
             <p style={{ fontSize: '14px', color: colors.text, margin: '0 0 16px 0', lineHeight: 1.5 }}>
-              These results are estimates. Use our calculator to estimate potential benefit amounts.
+              Estes resultados são estimativas. Use nossa calculadora para estimar valores potenciais de benefícios.
             </p>
             <button
               onClick={resetQuiz}
@@ -189,7 +189,7 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
               }}
             >
               <span>🔄</span>
-              Start Over
+              Começar Novamente
             </button>
           </div>
         </div>
@@ -209,13 +209,13 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
         borderBottom: `1px solid ${colors.border}`,
       }}>
         <h1 style={{ fontSize: '24px', color: colors.text, margin: '0 0 16px 0', fontWeight: 600 }}>
-          Check Eligibility
+          Verificar Elegibilidade
         </h1>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <span style={{ fontSize: '14px', color: colors.textSecondary }}>
-              Question {currentStep + 1} of {questions.length}
+              Pergunta {currentStep + 1} de {questions.length}
             </span>
             <span style={{ fontSize: '14px', color: colors.primary, fontWeight: 500 }}>
               {Math.round(progress)}%
@@ -293,7 +293,7 @@ export default function EligibilityScreen({ colors }: EligibilityScreenProps) {
               minHeight: '44px',
             }}
           >
-            ← Back
+            ← Voltar
           </button>
         )}
       </div>

@@ -4,11 +4,12 @@ import { User, Mail, Lock, Eye, EyeOff, ArrowLeft, Chrome, Apple } from 'lucide-
 interface SignUpScreenProps {
   colors: any;
   onSignUp: (name: string, email: string, password: string) => void;
+  onSocialLogin: (provider: 'google' | 'apple') => void;
   onBack: () => void;
   onLogin: () => void;
 }
 
-export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: SignUpScreenProps) {
+export default function SignUpScreen({ colors, onSignUp, onSocialLogin, onBack, onLogin }: SignUpScreenProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,47 +33,47 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
     let isValid = true;
 
     if (!name) {
-      setNameError('Name is required');
+      setNameError('Nome é obrigatório');
       isValid = false;
     } else if (name.length < 2) {
-      setNameError('Name must be at least 2 characters');
+      setNameError('O nome deve ter pelo menos 2 caracteres');
       isValid = false;
     } else {
       setNameError('');
     }
 
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError('Email é obrigatório');
       isValid = false;
     } else if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError('Por favor, insira um email válido');
       isValid = false;
     } else {
       setEmailError('');
     }
 
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError('Senha é obrigatória');
       isValid = false;
     } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+      setPasswordError('A senha deve ter pelo menos 8 caracteres');
       isValid = false;
     } else {
       setPasswordError('');
     }
 
     if (!confirmPassword) {
-      setConfirmPasswordError('Please confirm your password');
+      setConfirmPasswordError('Por favor, confirme sua senha');
       isValid = false;
     } else if (password !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
+      setConfirmPasswordError('As senhas não coincidem');
       isValid = false;
     } else {
       setConfirmPasswordError('');
     }
 
     if (!agreeToTerms) {
-      setTermsError('You must agree to the terms and conditions');
+      setTermsError('Você deve concordar com os termos e condições');
       isValid = false;
     } else {
       setTermsError('');
@@ -83,14 +84,27 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
     }
   };
 
+  const handleGoogleSignUp = () => {
+    alert('Criando conta com Google...');
+    onSocialLogin('google');
+  };
+
+  const handleAppleSignUp = () => {
+    alert('Criando conta com Apple...');
+    onSocialLogin('apple');
+  };
+
   const styles = {
     container: {
       display: 'flex',
       flexDirection: 'column' as const,
-      minHeight: '100vh',
+      minHeight: '100%',
+      height: '100%',
       backgroundColor: colors.background,
       padding: '24px',
       overflowY: 'auto' as const,
+      WebkitOverflowScrolling: 'touch' as const,
+      touchAction: 'pan-y' as const,
     },
     header: {
       marginBottom: '24px',
@@ -173,9 +187,9 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
       fontSize: '12px',
       color: '#ef4444',
     },
-    checkboxRow: {
+    checkboxContainer: {
       display: 'flex',
-      alignItems: 'flex-start',
+      alignItems: 'center',
       gap: '12px',
       cursor: 'pointer',
     },
@@ -187,21 +201,21 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: '2px',
+      backgroundColor: colors.surfaceLight,
       flexShrink: 0,
     },
     checkboxChecked: {
       backgroundColor: colors.primary,
       borderColor: colors.primary,
     },
-    checkboxError: {
-      borderColor: '#ef4444',
-    },
     checkboxLabel: {
-      flex: 1,
-      fontSize: '14px',
-      color: colors.text,
-      lineHeight: '20px',
+      fontSize: '13px',
+      color: colors.textSecondary,
+      lineHeight: '18px',
+    },
+    checkboxLabelLink: {
+      color: colors.primary,
+      fontWeight: '500' as const,
     },
     signupButton: {
       background: `linear-gradient(90deg, ${colors.primary}, ${colors.primaryDark})`,
@@ -215,6 +229,9 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
       boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)',
       marginTop: '8px',
       transition: 'transform 0.2s',
+      minHeight: '52px',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
     },
     divider: {
       display: 'flex',
@@ -243,6 +260,9 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
       backgroundColor: colors.surface,
       cursor: 'pointer',
       transition: 'background-color 0.2s',
+      minHeight: '52px',
+      touchAction: 'manipulation' as const,
+      WebkitTapHighlightColor: 'transparent',
     },
     socialButtonText: {
       fontSize: '15px',
@@ -273,21 +293,21 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <button onClick={onBack} style={styles.backButton} aria-label="Go back">
+        <button onClick={onBack} style={styles.backButton} aria-label="Voltar">
           <ArrowLeft size={24} />
         </button>
       </div>
 
       <div style={styles.titleSection}>
-        <div style={styles.title}>Create Account</div>
+        <div style={styles.title}>Criar Conta</div>
         <div style={styles.subtitle}>
-          Sign up to get started with Benefits Guide
+          Cadastre-se para começar a usar o Guia de Benefícios
         </div>
       </div>
 
       <div style={styles.form}>
         <div style={styles.inputGroup}>
-          <div style={styles.label}>Full Name</div>
+          <div style={styles.label}>Nome Completo</div>
           <div style={{
             ...styles.inputContainer,
             ...(nameError ? styles.inputContainerError : {}),
@@ -300,8 +320,9 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
                 setName(e.target.value);
                 setNameError('');
               }}
-              placeholder="John Doe"
+              placeholder="João Silva"
               type="text"
+              autoCapitalize="words"
             />
           </div>
           {nameError && <div style={styles.errorText}>{nameError}</div>}
@@ -321,7 +342,7 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
                 setEmail(e.target.value);
                 setEmailError('');
               }}
-              placeholder="your.email@example.com"
+              placeholder="seu.email@exemplo.com"
               type="email"
               autoCapitalize="none"
               autoCorrect="off"
@@ -331,7 +352,7 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
         </div>
 
         <div style={styles.inputGroup}>
-          <div style={styles.label}>Password</div>
+          <div style={styles.label}>Senha</div>
           <div style={{
             ...styles.inputContainer,
             ...(passwordError ? styles.inputContainerError : {}),
@@ -344,14 +365,14 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
                 setPassword(e.target.value);
                 setPasswordError('');
               }}
-              placeholder="Minimum 8 characters"
+              placeholder="Mínimo de 8 caracteres"
               type={showPassword ? 'text' : 'password'}
               autoCapitalize="none"
             />
             <button
               onClick={() => setShowPassword(!showPassword)}
               style={styles.eyeButton}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
               type="button"
             >
               {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -361,7 +382,7 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
         </div>
 
         <div style={styles.inputGroup}>
-          <div style={styles.label}>Confirm Password</div>
+          <div style={styles.label}>Confirmar Senha</div>
           <div style={{
             ...styles.inputContainer,
             ...(confirmPasswordError ? styles.inputContainerError : {}),
@@ -374,14 +395,14 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
                 setConfirmPassword(e.target.value);
                 setConfirmPasswordError('');
               }}
-              placeholder="Re-enter your password"
+              placeholder="Digite a senha novamente"
               type={showConfirmPassword ? 'text' : 'password'}
               autoCapitalize="none"
             />
             <button
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               style={styles.eyeButton}
-              aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+              aria-label={showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'}
               type="button"
             >
               {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -396,30 +417,23 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
               setAgreeToTerms(!agreeToTerms);
               setTermsError('');
             }}
-            style={styles.checkboxRow}
+            style={styles.checkboxContainer}
           >
             <div style={{
               ...styles.checkbox,
               ...(agreeToTerms ? styles.checkboxChecked : {}),
-              ...(termsError ? styles.checkboxError : {}),
             }}>
               {agreeToTerms && (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M3 8L6.5 11.5L13 5"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                  <path d="M1 5L4.5 8.5L11 1.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               )}
             </div>
             <div style={styles.checkboxLabel}>
-              I agree to the{' '}
-              <span style={{ color: colors.primary }}>Terms & Conditions</span>
-              {' '}and{' '}
-              <span style={{ color: colors.primary }}>Privacy Policy</span>
+              Eu concordo com os{' '}
+              <span style={styles.checkboxLabelLink}>Termos de Serviço</span>
+              {' '}e{' '}
+              <span style={styles.checkboxLabelLink}>Política de Privacidade</span>
             </div>
           </div>
           {termsError && <div style={styles.errorText}>{termsError}</div>}
@@ -430,45 +444,47 @@ export default function SignUpScreen({ colors, onSignUp, onBack, onLogin }: Sign
           style={styles.signupButton}
           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          aria-label="Create account"
+          aria-label="Criar Conta"
           type="button"
         >
-          Create Account
+          Criar Conta
         </button>
 
         <div style={styles.divider}>
           <div style={styles.dividerLine} />
-          <div style={styles.dividerText}>OR</div>
+          <div style={styles.dividerText}>OU</div>
           <div style={styles.dividerLine} />
         </div>
 
         <button
+          onClick={handleGoogleSignUp}
           style={styles.socialButton}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
-          aria-label="Continue with Google"
+          aria-label="Continuar com Google"
           type="button"
         >
           <Chrome size={20} color="#ea4335" />
-          <div style={styles.socialButtonText}>Continue with Google</div>
+          <div style={styles.socialButtonText}>Continuar com Google</div>
         </button>
 
         <button
+          onClick={handleAppleSignUp}
           style={styles.socialButton}
           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = colors.surfaceLight}
           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = colors.surface}
-          aria-label="Continue with Apple"
+          aria-label="Continuar com Apple"
           type="button"
         >
           <Apple size={20} color={colors.text} />
-          <div style={styles.socialButtonText}>Continue with Apple</div>
+          <div style={styles.socialButtonText}>Continuar com Apple</div>
         </button>
       </div>
 
       <div style={styles.loginSection}>
-        <span style={styles.loginText}>Already have an account?</span>
+        <span style={styles.loginText}>Já tem uma conta?</span>
         <button onClick={onLogin} style={styles.loginLink} type="button">
-          Sign In
+          Entrar
         </button>
       </div>
     </div>

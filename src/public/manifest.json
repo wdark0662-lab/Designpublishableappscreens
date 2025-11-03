@@ -1,0 +1,63 @@
+{
+  "name": "Healix - Healthcare App",
+  "short_name": "Healix",
+  "description": "Your trusted healthcare companion for appointments, telemedicine, and medical consultations",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#3b82f6",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["finance", "utilities", "government"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book Appointment",
+      "short_name": "Appointment",
+      "description": "Schedule a doctor appointment",
+      "url": "/?action=appointment",
+      "icons": [
+        {
+          "src": "/icon-appointment.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Telemedicine",
+      "short_name": "Consult",
+      "description": "Start online consultation",
+      "url": "/?action=telemedicine",
+      "icons": [
+        {
+          "src": "/icon-telemedicine.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

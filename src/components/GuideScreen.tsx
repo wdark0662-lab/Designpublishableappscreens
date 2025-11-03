@@ -6,30 +6,30 @@ export default function GuideScreen({ colors }: GuideScreenProps) {
   const programs = [
     {
       icon: '👨‍👩‍👧‍👦',
-      title: 'Family Assistance',
-      description: 'Support for families with children',
-      items: ['Childcare subsidies', 'Educational grants', 'Family health programs'],
+      title: 'Assistência Familiar',
+      description: 'Apoio para famílias com crianças',
+      items: ['Subsídios para creches', 'Bolsas educacionais', 'Programas de saúde familiar'],
       color: colors.primary,
     },
     {
       icon: '🏠',
-      title: 'Housing Support',
-      description: 'Help with housing costs',
-      items: ['Rental assistance', 'Housing vouchers', 'Emergency shelter'],
+      title: 'Apoio à Moradia',
+      description: 'Ajuda com custos de habitação',
+      items: ['Assistência de aluguel', 'Vales de moradia', 'Abrigo de emergência'],
       color: colors.green,
     },
     {
       icon: '🍽️',
-      title: 'Nutrition Programs',
-      description: 'Food assistance programs',
-      items: ['Food assistance', 'Meal programs', 'Grocery support'],
+      title: 'Programas Nutricionais',
+      description: 'Programas de assistência alimentar',
+      items: ['Assistência alimentar', 'Programas de refeições', 'Apoio para compras'],
       color: '#f97316',
     },
     {
       icon: '❤️',
-      title: 'Healthcare Access',
-      description: 'Medical coverage and support',
-      items: ['Medical coverage', 'Prescription help', 'Preventive care'],
+      title: 'Acesso à Saúde',
+      description: 'Cobertura médica e apoio',
+      items: ['Cobertura médica', 'Ajuda com medicamentos', 'Cuidados preventivos'],
       color: '#ef4444',
     },
   ];
@@ -37,18 +37,18 @@ export default function GuideScreen({ colors }: GuideScreenProps) {
   const steps = [
     {
       number: '1',
-      title: 'Check Eligibility',
-      description: 'See which programs you may qualify for',
+      title: 'Verificar Elegibilidade',
+      description: 'Veja quais programas você pode acessar',
     },
     {
       number: '2',
-      title: 'Calculate Benefits',
-      description: 'Estimate your potential assistance amount',
+      title: 'Calcular Benefícios',
+      description: 'Estime o valor da sua assistência potencial',
     },
     {
       number: '3',
-      title: 'Apply for Programs',
-      description: 'Follow the application process',
+      title: 'Solicitar Programas',
+      description: 'Siga o processo de inscrição',
     },
   ];
 
@@ -68,10 +68,10 @@ export default function GuideScreen({ colors }: GuideScreenProps) {
         borderBottom: `1px solid ${colors.border}`,
       }}>
         <h1 style={{ fontSize: '24px', color: colors.text, margin: '0 0 8px 0', fontWeight: 600 }}>
-          Program Guide
+          Guia de Programas
         </h1>
         <p style={{ fontSize: '14px', color: colors.textSecondary, margin: 0, lineHeight: 1.5 }}>
-          Available assistance programs
+          Programas de assistência disponíveis
         </p>
       </div>
 
@@ -128,7 +128,7 @@ export default function GuideScreen({ colors }: GuideScreenProps) {
           padding: '24px',
         }}>
           <h2 style={{ fontSize: '18px', color: '#fff', margin: '0 0 24px 0', fontWeight: 600 }}>
-            How to Get Started
+            Como Começar
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -174,10 +174,10 @@ export default function GuideScreen({ colors }: GuideScreenProps) {
             <span style={{ fontSize: '20px', color: colors.green, flexShrink: 0, marginTop: '2px' }}>ℹ️</span>
             <div>
               <h3 style={{ fontSize: '16px', color: colors.text, margin: '0 0 4px 0', fontWeight: 500 }}>
-                Important Information
+                Informação Importante
               </h3>
               <p style={{ fontSize: '14px', color: colors.textSecondary, margin: 0, lineHeight: 1.5 }}>
-                Program availability and requirements may vary. Always verify current details before applying.
+                A disponibilidade e os requisitos do programa podem variar. Sempre verifique os detalhes atuais antes de se inscrever.
               </p>
             </div>
           </div>

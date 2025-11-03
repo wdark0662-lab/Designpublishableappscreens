@@ -9,54 +9,54 @@ export default function FAQScreen({ colors }: FAQScreenProps) {
 
   const faqs = [
     {
-      question: 'How do I know if I qualify?',
+      question: 'Como sei se me qualifico?',
       answer:
-        'Eligibility varies by program but generally depends on household size, income, and specific needs. Use our Eligibility tool to check which programs you may qualify for.',
+        'A elegibilidade varia por programa, mas geralmente depende do tamanho da família, renda e necessidades específicas. Use nossa ferramenta de Elegibilidade para verificar quais programas você pode acessar.',
     },
     {
-      question: 'How long does it take?',
+      question: 'Quanto tempo demora?',
       answer:
-        'Processing times vary by program. Some provide immediate determinations, while others may take 2-4 weeks. Emergency assistance programs typically process applications faster.',
+        'Os tempos de processamento variam por programa. Alguns fornecem determinações imediatas, enquanto outros podem levar de 2 a 4 semanas. Programas de assistência emergencial geralmente processam aplicações mais rapidamente.',
     },
     {
-      question: 'Can I apply for multiple programs?',
+      question: 'Posso me inscrever em vários programas?',
       answer:
-        'Yes, you can apply for multiple assistance programs simultaneously. Many programs complement each other and are designed to work together.',
+        'Sim, você pode se inscrever em vários programas de assistência simultaneamente. Muitos programas se complementam e são projetados para funcionar juntos.',
     },
     {
-      question: 'What documents do I need?',
+      question: 'Quais documentos eu preciso?',
       answer:
-        'Common documents include proof of identity, income verification (pay stubs, tax returns), proof of residence, and household composition information.',
+        'Documentos comuns incluem comprovante de identidade, comprovante de renda (holerites, declarações de imposto), comprovante de residência e informações sobre composição familiar.',
     },
     {
-      question: 'How often do I need to recertify?',
+      question: 'Com que frequência preciso recertificar?',
       answer:
-        'Most programs require periodic recertification, typically every 6-12 months. You will receive notice before your benefits expire with instructions.',
+        'A maioria dos programas requer recertificação periódica, normalmente a cada 6-12 meses. Você receberá um aviso antes de seus benefícios expirarem com instruções.',
     },
     {
-      question: 'Is my information confidential?',
+      question: 'Minhas informações são confidenciais?',
       answer:
-        'Yes, all personal information is protected and kept confidential. Information is only shared as required by law or with your explicit consent.',
+        'Sim, todas as informações pessoais são protegidas e mantidas confidenciais. As informações são compartilhadas apenas conforme exigido por lei ou com seu consentimento explícito.',
     },
     {
-      question: "What if I'm denied?",
+      question: 'E se eu for negado?',
       answer:
-        'If denied, you have the right to appeal the decision. You will receive information about the appeals process with your denial notice.',
+        'Se for negado, você tem o direito de apelar da decisão. Você receberá informações sobre o processo de apelação com seu aviso de negação.',
     },
     {
-      question: 'Can I receive help while working?',
+      question: 'Posso receber ajuda enquanto trabalho?',
       answer:
-        'Yes, many programs are designed to supplement income for working individuals and families. Having employment does not automatically disqualify you.',
+        'Sim, muitos programas são projetados para complementar a renda de indivíduos e famílias que trabalham. Ter emprego não desqualifica você automaticamente.',
     },
     {
-      question: 'How are amounts calculated?',
+      question: 'Como os valores são calculados?',
       answer:
-        'Benefit amounts are calculated based on household size, income, expenses, and specific program guidelines. Our Calculator tool can help estimate potential benefits.',
+        'Os valores de benefícios são calculados com base no tamanho da família, renda, despesas e diretrizes específicas do programa. Nossa ferramenta Calculadora pode ajudar a estimar benefícios potenciais.',
     },
     {
-      question: 'Where can I get help applying?',
+      question: 'Onde posso obter ajuda para me inscrever?',
       answer:
-        'Many community organizations and social service agencies offer free application assistance. Contact your local social services office for information.',
+        'Muitas organizações comunitárias e agências de serviços sociais oferecem assistência gratuita para inscrição. Entre em contato com seu escritório local de serviços sociais para informações.',
     },
   ];
 
@@ -80,10 +80,10 @@ export default function FAQScreen({ colors }: FAQScreenProps) {
         borderBottom: `1px solid ${colors.border}`,
       }}>
         <h1 style={{ fontSize: '24px', color: colors.text, margin: '0 0 8px 0', fontWeight: 600 }}>
-          Frequently Asked
+          Perguntas Frequentes
         </h1>
         <p style={{ fontSize: '14px', color: colors.textSecondary, margin: 0 }}>
-          Common questions and answers
+          Perguntas e respostas comuns
         </p>
       </div>
 
@@ -140,11 +140,10 @@ export default function FAQScreen({ colors }: FAQScreenProps) {
           padding: '24px',
         }}>
           <h2 style={{ fontSize: '18px', color: '#fff', margin: '0 0 8px 0', fontWeight: 600 }}>
-            Need More Help?
+            Precisa de Mais Ajuda?
           </h2>
           <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.9)', margin: 0, lineHeight: 1.5 }}>
-            Contact your local social services office or use our tools to learn more about available
-            programs.
+            Entre em contato com seu escritório local de serviços sociais ou use nossas ferramentas para saber mais sobre programas disponíveis.
           </p>
         </div>
       </div>

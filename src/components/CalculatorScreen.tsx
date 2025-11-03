@@ -66,10 +66,10 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
         borderBottom: `1px solid ${colors.border}`,
       }}>
         <h1 style={{ fontSize: '24px', color: colors.text, margin: '0 0 8px 0', fontWeight: 600 }}>
-          Benefits Calculator
+          Calculadora de Benefícios
         </h1>
         <p style={{ fontSize: '14px', color: colors.textSecondary, margin: 0 }}>
-          Estimate your monthly benefits
+          Estime seus benefícios mensais
         </p>
       </div>
 
@@ -81,7 +81,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
               <span style={{ fontSize: '20px' }}>👨‍👩‍👧‍👦</span>
               <label htmlFor="householdSize" style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                Household Size
+                Tamanho da Família
               </label>
             </div>
             <select
@@ -93,11 +93,11 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
               }}
               style={inputStyle}
             >
-              <option value="1">1 person</option>
-              <option value="2">2 people</option>
-              <option value="3">3 people</option>
-              <option value="4">4 people</option>
-              <option value="5">5+ people</option>
+              <option value="1">1 pessoa</option>
+              <option value="2">2 pessoas</option>
+              <option value="3">3 pessoas</option>
+              <option value="4">4 pessoas</option>
+              <option value="5">5+ pessoas</option>
             </select>
           </div>
 
@@ -106,7 +106,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
               <span style={{ fontSize: '20px' }}>💵</span>
               <label htmlFor="monthlyIncome" style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                Monthly Income
+                Renda Mensal
               </label>
             </div>
             <input
@@ -117,7 +117,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                 setMonthlyIncome(e.target.value);
                 setShowResults(false);
               }}
-              placeholder="Enter amount"
+              placeholder="Digite o valor"
               min="0"
               step="100"
               style={inputStyle}
@@ -130,7 +130,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
               <span style={{ fontSize: '20px' }}>🏠</span>
               <label htmlFor="rentCost" style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                Monthly Rent
+                Aluguel Mensal
               </label>
             </div>
             <input
@@ -141,7 +141,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                 setRentCost(e.target.value);
                 setShowResults(false);
               }}
-              placeholder="Enter amount"
+              placeholder="Digite o valor"
               min="0"
               step="50"
               style={inputStyle}
@@ -173,7 +173,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                 }}
               />
               <span style={{ fontSize: '16px', color: colors.text }}>
-                I have children under 18
+                Tenho filhos menores de 18 anos
               </span>
             </label>
           </div>
@@ -196,7 +196,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
           }}
         >
-          Calculate Benefits
+          Calcular Benefícios
         </button>
       </form>
 
@@ -215,10 +215,10 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                 <span style={{ fontSize: '24px', marginTop: '4px' }}>📈</span>
                 <div>
                   <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.9)', margin: '0 0 4px 0' }}>
-                    Estimated Monthly Benefits
+                    Benefícios Mensais Estimados
                   </p>
                   <p style={{ fontSize: '32px', color: '#fff', margin: 0, fontWeight: 600 }}>
-                    ${results.total.toLocaleString()}
+                    R$ {results.total.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -229,7 +229,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
           <div style={{ padding: '0 16px 24px' }}>
             <div style={{ ...cardStyle, overflow: 'hidden' }}>
               <div style={{ padding: '20px', borderBottom: `1px solid ${colors.border}` }}>
-                <h3 style={{ fontSize: '16px', color: colors.text, margin: 0, fontWeight: 500 }}>Breakdown</h3>
+                <h3 style={{ fontSize: '16px', color: colors.text, margin: 0, fontWeight: 500 }}>Detalhamento</h3>
               </div>
 
               {results.food > 0 && (
@@ -240,9 +240,9 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                  <span style={{ fontSize: '14px', color: colors.text }}>Food Assistance</span>
+                  <span style={{ fontSize: '14px', color: colors.text }}>Assistência Alimentar</span>
                   <span style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                    ${results.food.toLocaleString()}
+                    R$ {results.food.toLocaleString()}
                   </span>
                 </div>
               )}
@@ -255,9 +255,9 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                  <span style={{ fontSize: '14px', color: colors.text }}>Housing Assistance</span>
+                  <span style={{ fontSize: '14px', color: colors.text }}>Assistência de Moradia</span>
                   <span style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                    ${results.housing.toLocaleString()}
+                    R$ {results.housing.toLocaleString()}
                   </span>
                 </div>
               )}
@@ -270,9 +270,9 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                  <span style={{ fontSize: '14px', color: colors.text }}>Childcare Support</span>
+                  <span style={{ fontSize: '14px', color: colors.text }}>Apoio para Creche</span>
                   <span style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                    ${results.childcare.toLocaleString()}
+                    R$ {results.childcare.toLocaleString()}
                   </span>
                 </div>
               )}
@@ -284,9 +284,9 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                  <span style={{ fontSize: '14px', color: colors.text }}>Healthcare Coverage</span>
+                  <span style={{ fontSize: '14px', color: colors.text }}>Cobertura de Saúde</span>
                   <span style={{ fontSize: '16px', color: colors.text, fontWeight: 500 }}>
-                    ${results.healthcare.toLocaleString()}
+                    R$ {results.healthcare.toLocaleString()}
                   </span>
                 </div>
               )}
@@ -302,7 +302,7 @@ export default function CalculatorScreen({ colors }: CalculatorScreenProps) {
               backgroundColor: colors.surfaceLight,
             }}>
               <p style={{ fontSize: '14px', color: colors.text, margin: 0, lineHeight: 1.5 }}>
-                These are estimated amounts based on general guidelines. Actual benefits may vary.
+                Estes são valores estimados com base em diretrizes gerais. Os benefícios reais podem variar.
               </p>
             </div>
           </div>
